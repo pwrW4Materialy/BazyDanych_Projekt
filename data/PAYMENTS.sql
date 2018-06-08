@@ -1,6 +1,12 @@
-insert into PAYMENTS (PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS) values (1, 1, 'final', 314084, 'started');
-insert into PAYMENTS (PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS) values (2, 2, 'advance', 459124, 'canceled');
-insert into PAYMENTS (PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS) values (3, 3, 'advance', 163346, 'started');
+insert into PAYMENTS 
+	(PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS)
+	values (1, 1, 'final', 314084, 'started');
+insert into PAYMENTS
+	(PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS)
+	values (2, 2, 'advance', 459124, 'canceled');
+insert into PAYMENTS 
+	(PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS)
+	values (3, 3, 'advance', 163346, 'started');
 insert into PAYMENTS (PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS) values (4, 4, 'advance', 275762, 'completed');
 insert into PAYMENTS (PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS) values (5, 5, 'final', 66569, 'refunded');
 insert into PAYMENTS (PAYMENT_ID, RESERVATION_ID, TYPE, VALUE, STATUS) values (6, 6, 'advance', 499308, 'canceled');

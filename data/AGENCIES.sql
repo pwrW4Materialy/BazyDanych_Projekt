@@ -1,5 +1,12 @@
-insert into AGENCIES (AGENCY_ID, LOCATION_ID, NAME, INFO, PHONE, WEB) values (1, 1, 'Jamia', 'luctus et ultrices posuere cubilia curae duis faucibus accumsan odio', '410-258-5854', 'www.zzxuswefx.com');
-insert into AGENCIES (AGENCY_ID, LOCATION_ID, NAME, INFO, PHONE, WEB) values (2, 2, 'Meedoo', 'ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi', '773-399-9081', 'www.rtcnakspl.com');
+insert into AGENCIES 
+	(AGENCY_ID, LOCATION_ID, NAME, INFO, PHONE, WEB)
+ 	values (1, 1, 'Jamia', 'luctus et ultrices posuere cubilia curae
+	duis faucibus accumsan odio', '410-258-5854', 'www.zzxuswefx.com');
+insert into AGENCIES (AGENCY_ID, LOCATION_ID, NAME, INFO, PHONE, WEB)
+ 	values (2, 2, 'Meedoo', 'ante vel ipsum praesent blandit lacinia
+ 	erat vestibulum sed magna at nunc commodo placerat praesent blandit
+	nam nulla integer pede justo lacinia eget tincidunt eget tempus vel
+ 	pede morbi', '773-399-9081', 'www.rtcnakspl.com');
 insert into AGENCIES (AGENCY_ID, LOCATION_ID, NAME, INFO, PHONE, WEB) values (3, 3, 'Blogtags', 'pretium quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis', '903-384-0341', 'www.gyhmpfngh.com');
 insert into AGENCIES (AGENCY_ID, LOCATION_ID, NAME, INFO, PHONE, WEB) values (4, 4, 'Oyope', 'congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in', '281-881-7580', 'www.ajhiyqcfg.com');
 insert into AGENCIES (AGENCY_ID, LOCATION_ID, NAME, INFO, PHONE, WEB) values (5, 5, 'Kwilith', 'sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas', '808-804-7476', 'www.ywivqyrka.com');

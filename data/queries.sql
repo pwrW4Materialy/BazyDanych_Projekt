@@ -1,5 +1,5 @@
 /*
-Usercase: user-client chce wyszukac apartament wedug parametrów:
+Usercase: user-client chce wyszukac apartament wedug parametrow:
     kraj (obowiazkowe),
     cena za noc,
     ilosc lozek (obowiazkowe),
@@ -136,7 +136,7 @@ from reservations
 where apartment_id = 50;
 
 /*
-Usercase: user-owner chce zmieniæ status wybranej rezerwacji:
+Usercase: user-owner chce zmienic status wybranej rezerwacji:
 	reservation_id (wymagane),
 	nowy status (wymagane)
  */
@@ -150,13 +150,13 @@ BEGIN
 RETURN id;
 end;
 
---przyk³adowe:
+--przykladowe:
 UPDATE RESERVATIONS
 SET STATUS = 1
 WHERE RESERVATION_ID = 1;
 
 /*
-Usercase: system otrzyma³ potwierdzenie p³atno¶ci:
+Usercase: system otrzymal potwierdzenie platnosci:
 	payment_id (wymagane)
 	nowy status (wymagane)
  */
@@ -170,13 +170,13 @@ BEGIN
 RETURN id;
 end;
 
---przyk³adowe:
+--przykladowe:
 UPDATE PAYMENTS
 SET STATUS = 'started'
 WHERE PAYMENT_ID = 5;
 
 /*
-Usercase: user-client chce anulowaæ rezerwacjê
+Usercase: user-client chce anulowac rezerwacje
 	reservation_id (wymagane)
  */
 CREATE FUNCTION RESERVATION_CANCEL (reservation IN int)
@@ -208,7 +208,7 @@ BEGIN
 RETURN refund_amount;
 end;
 
---przyk³adowe
+--przykladowe
 UPDATE RESERVATIONS
 SET STATUS = 3
 WHERE RESERVATION_ID = 1;
@@ -226,7 +226,7 @@ SET STATUS = 'refunded'
 WHERE RESERVATION_ID = 1;
 
 /*
-Usercase: user-client chce wy¶wietliæ swoje rezerwacje
+Usercase: user-client chce wyswietlic swoje rezerwacje
 	user_id clienta (wymagane)
  */
 CREATE FUNCTION GET_USER_RESERVATIONS (client_id IN int)
@@ -239,15 +239,15 @@ BEGIN
 RETURN my_cursor;
 END;
 
---przyk³adowe
+--przykladowe
 SELECT *
 FROM RESERVATIONS
 WHERE USER_ID = 499;
 
 --2
 /*
-Usercase: user-client chce sprawdziæ dostêpnoœæ apartamentu:
-    apartament_id (obowi¹zkowe)
+Usercase: user-client chce sprawdzic dostepno?c apartamentu:
+    apartament_id (obowiszkowe)
 */
 CREATE OR REPLACE FUNCTION apartment_busy (
     v_apartment_id IN INT
@@ -265,7 +265,7 @@ BEGIN
     RETURN my_cursor;
 END;
 
---przyk³ad
+--przyklad
 
 SELECT
     date_begin,
@@ -278,14 +278,14 @@ AND status != 3;
     
 --9
 /*
-Usercase: user-owner chce dodaæ apartament:
-        cost_per_night (obowi¹zkowe)
-        bed_count (obowi¹zkowe)
-        location_id (obowi¹zkowe)
-        agency_id (obowi¹zkowe)
-        air_cond (obowi¹zkowe)
-        standard (obowi¹zkowe)
-        owner_id (obowi¹zkowe)
+Usercase: user-owner chce dodac apartament:
+        cost_per_night (obowiszkowe)
+        bed_count (obowiszkowe)
+        location_id (obowiszkowe)
+        agency_id (obowiszkowe)
+        air_cond (obowiszkowe)
+        standard (obowiszkowe)
+        owner_id (obowiszkowe)
 */
 
 CREATE OR REPLACE FUNCTION insert_apartment (
@@ -327,7 +327,7 @@ BEGIN
     RETURN ret;
 END;
 
---przyk³ad
+--przyklad
 
 INSERT INTO apartments (
     apartment_id,
