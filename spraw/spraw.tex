@@ -6,6 +6,17 @@
 \usepackage[T1]{fontenc}
 \usepackage{booktabs,multirow,multicol}
 \usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{lmodern}
+\lstset
+{ %Formatting for code in appendix
+	basicstyle=\footnotesize,
+	language=SQL,
+	numbers=left,
+	stepnumber=1,
+	tabsize=4,
+	basicstyle=\ttfamily,
+}
 
 \usepackage{float}
 \usepackage{graphicx}
@@ -330,15 +341,55 @@
 			    Po wykonaniu tych operacji możemy zalogować się po IP serwera na użytkownika {\bfseries SYSTEM} w celu dalszej konfiguracji bazy danych,
 			    którą można wykonać przy pomocy zapytań SQL. W pierwszej kolejności utworzono użytkownika do którego będą należeć encje projektu.
 			    Oprócz tego stworzono użytkownika i nadano odpowiednie uprawnienia dla każdego członka zespołu projektowego. Dzięki zastosowaniu
-			    synonimów/aliasów publicznych - {\bfseries CREATE PUBLIC SYNONYM ...} encje oraz funkcje projektu są dostępne dla każdego członka
+			    synonimów/aliasów publicznych - {\bfseries CREATE PUBLIC SYNONYM\dots} encje oraz funkcje projektu są dostępne dla każdego członka
 			    zespołu bez konieczności adresowania z uwzględnieniem właściciela.\\\\ 
 			    Takie rozwiązanie umożliwia równoległą pracę nad jedną bazą danych dla wielu użytkowników fizycznych, w dowolnym miejscu i czasie.
 		    
 		    \paragraph{Implementacja obiektów}\mbox{}\\\\
+			    W pierwszej kolejności utworzono wymagane encje, bez modelowania relacji, używając polecenia: {\bfseries CREATE TABLE}\\\\
+			    
+			    \lstinputlisting[firstnumber=1, firstline=1, lastline=61]{../data/create.sql}
+			    
+			    Następnie utworzono relację pomiędzy nowo utworzonymi encjami, używając składni:\\ 
+			    {\bfseries ALTER TABLE <TABELA> ADD CONSTRAINT <NAZWA> FOREIGN KEY\dots}\\
+			    
+			    \lstinputlisting[firstnumber=1, firstline=1, firstline=63]{../data/create.sql}
 		    
 		    \paragraph{Wprowadzenie danych}\mbox{}\\\\
+			    Do wygenerowania przykładowych danych użyto narzędzia {\bfseries mockaroo.com} pozwalającego na tworzenie zbiorów z danymi
+			    na potrzeby testów. Określamy strukturę tabeli, typy danych oraz jakie dane nas interesują. Narzędzie umożliwia utworzenie
+			    gotowych poleceń {\bfseries INSERT}.\\
+			    
+			    \noindent
+			    Dla tabeli {\bfseries RESERVATIONS} utworzono 100 obiektów, przykład:
+			    \lstinputlisting[firstnumber=1, firstline=1, lastline=9]{../data/RESERVATIONS.sql}
+			    
+			    \vspace{0.5cm}\noindent
+			    Dla tabeli {\bfseries PAYMENTS} utworzono 100 obiektów, przykład:
+			    \lstinputlisting[firstnumber=1, firstline=1, lastline=9]{../data/PAYMENTS.sql}
+			    
+			    \vspace{0.5cm}\noindent
+			    Dla tabeli {\bfseries LOCATIONS} utworzono 1000 obiektów, przykład:
+			    \lstinputlisting[firstnumber=1, firstline=1, lastline=8]{../data/LOCATIONS.sql}
+			    
+			    \vspace{0.5cm}\noindent
+			    Dla tabeli {\bfseries AGENCIES} utworzono 50 obiektów, przykład:
+			    \lstinputlisting[firstnumber=1, firstline=1, lastline=9]{../data/AGENCIES.sql}
+			    
+			    \vspace{0.5cm}\noindent
+			    Dla tabeli {\bfseries USERS} utworzono 548 obiektów, przykład:
+			    \lstinputlisting[firstnumber=1, firstline=1, lastline=9]{../data/USER.sql}
+			    
+			    \vspace{0.5cm}\noindent
+			    Dla tabeli {\bfseries APARTMENTS} utworzono 200 obiektów, przykład:
+			    \lstinputlisting[firstnumber=1, firstline=1, lastline=9]{../data/APARTMENTS.sql}
 		    
 		    \paragraph{Zdefiniowanie typowych operacji SQL}\mbox{}\\\\
+				Utworzono zapytania oraz funkcje potrzebne do obsługi przedstawionego problemu. W celu systematyzacji
+				zapytania podzielono na typowe Usercasey. Pod każdą funkcją znajduje się także przykład czystego zapytania SQL, który byłby
+				użyty np. w backendie aplikacji, po podmianie przykładowych wartości na zmienne.
+				
+				\lstinputlisting[firstnumber=1, firstline=1, ]{../data/queries.sql}
 
     \subsection{Podsumowanie}
 	    \subsubsection{Ocena realizacji tematu}

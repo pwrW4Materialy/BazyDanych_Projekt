@@ -1,4 +1,12 @@
-insert into USERS (USER_ID, TYPE, EMAIL, PASSWORD, INFO, PHONE, NAME, LAST_NAME, LOCATION_ID) values (201, 'client', 'mgealle0@dedecms.com', '1d2351adc06cfeef9a29f0989eae5e130adda76f', 'odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum', '379-642-0501', 'Marylou', 'Gealle', 453);
+insert into USERS 
+	(USER_ID, TYPE, EMAIL, PASSWORD, INFO, PHONE, NAME,
+	LAST_NAME, LOCATION_ID) 
+	values (201, 'client', 'mgealle0@dedecms.com', 
+	'1d2351adc06cfeef9a29f0989eae5e130adda76f', 
+	'odio cras mi pede malesuada in imperdiet et commodo
+	vulputate justo in blandit ultrices enim lorem ipsum
+	dolor sit amet consectetuer adipiscing elit proin interdum',
+	'379-642-0501', 'Marylou', 'Gealle', 453);
 insert into USERS (USER_ID, TYPE, EMAIL, PASSWORD, INFO, PHONE, NAME, LAST_NAME, LOCATION_ID) values (202, 'client', 'callery1@tmall.com', '865208c378c4b839cbafc57b5724f4edcedee405', 'maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere', '269-578-2532', 'Constancia', 'Allery', 454);
 insert into USERS (USER_ID, TYPE, EMAIL, PASSWORD, INFO, PHONE, NAME, LAST_NAME, LOCATION_ID) values (203, 'client', 'tjoice2@cam.ac.uk', '7ec6ca5333f2d77a331454672c602e62892af315', 'justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur', '458-263-1172', 'Tate', 'Joice', 455);
 insert into USERS (USER_ID, TYPE, EMAIL, PASSWORD, INFO, PHONE, NAME, LAST_NAME, LOCATION_ID) values (204, 'client', 'fcrust3@vinaora.com', '3e9ac5b81b7482e531778ae293d78ec3f7367b0c', 'convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est', '402-906-1126', 'Felipe', 'Crust', 456);

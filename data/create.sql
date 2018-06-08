@@ -12,7 +12,8 @@ CREATE TABLE PAYMENTS(
   RESERVATION_ID int,
   TYPE VARCHAR2(16) CHECK(TYPE IN ('advance', 'final')),
   VALUE int,
-  STATUS VARCHAR2(16) CHECK(STATUS IN ('started', 'completed', 'canceled', 'refunded'))
+  STATUS VARCHAR2(16) CHECK(STATUS IN ('started', 'completed',
+ 	'canceled', 'refunded'))
 );
 
 CREATE TABLE LOCATIONS(
@@ -48,7 +49,7 @@ CREATE TABLE USERS(
   LOCATION_ID INT
 );
 
-create table APARTMENTS(
+CREATE TABLE APARTMENTS(
     APARTMENT_ID int NOT NULL PRIMARY KEY,
     COST_PER_NIGHT int,
     BED_COUNT int,
