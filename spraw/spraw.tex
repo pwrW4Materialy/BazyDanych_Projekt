@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{booktabs,multirow,multicol}
+\usepackage{pdfpages}
 
 \usepackage{float}
 \usepackage{graphicx}
@@ -27,7 +28,7 @@
 \begin{document}
 \begin{titlepage}
     \centering
-    {\scshape\LARGE Bazy Danych\\ projekt \par}
+    {\scshape\Huge\bfseries Bazy Danych\\ projekt \par}
     \vspace{1cm}
    
     {\itshape\Large Janusz Długosz --- 235746\/\par}
@@ -257,18 +258,56 @@
 
     \subsection{Schemat diagramu ERD}
 	    \subsubsection{Opis aplikacji w której modelowano schemat}
+		    W celu wygenerowania diagramu ERD użyto aplikacji {\bfseries DataGrip} oferowanej przez firmę JetBrains. 
+		    Jest to IDE obsługujące większość popularnych odmian SQL oraz związanych z nimi systemów bazodanowych.\\\\
+		    Aby wygenerować diagram ERD należy nawiązać połączenie z wybranym serverem hostującym system
+		    bazodanowy. Po zalogowaniu kliknąć prawym przyciskiem myszy na obecne połączenie i z menu kontekstowego
+		    wybrać opcję {\bfseries'Diagrams' -> 'Show visualization'}, po kliknięciu w nowej zakładce wygeneruje się wizualizacja
+		    ERD. Diagram jest automatycznie generowany z encji dostępnych dla zalogowanego użytkownika. Widok pozwala jedynie na
+		    odczyt struktury bazy danych w formie graficznym, bez możliwości edycji. Użytkownik ma możliwość eksportu widoku
+		    do pliku w formacie graficznym, diagramu UML oraz PostScript lub wydrukowania diagramu na drukarce. Zmiany uwzględniane
+		    są na bieżąco po każdej operacji ingerującej w strukturę bazy danych.\\\\
+		    Wizualizacja została zaimplementowana z wykorzystaniem biblioteki {\bfseries yFiles}
 	    
 	    \subsubsection{Prezentacja schematu ERD bazy danych}
+		    \includepdf{../data/out.pdf}
 
     \subsection{Rozwiązanie problemu}
-	    \subsubsection{system bazodanowy}
-		    \paragraph{Utworzenie bazy danych}
+	    \subsubsection{System bazodanowy}
+		    \paragraph{Utworzenie bazy danych}\mbox{}\\\\
+			    Zgodnie z założeniami projektu wykorzystano system bazodanowy oferowany przez firmę Oracle - 
+			    {\bfseries Oracle Database 11g Express Edition Release 2} w wersji na system Linux z architekturą 64 bitową.
+			    Firma Oracle wspiera jedynie dystrybucje Linuxa wykorzystujące {\bfseries RPM Package Manager} jako system dystrybucji paczek.
+			    Oracle Database jest produktem komercyjnym z zamkniętym źródłem, więc nie istnieje możliwość samodzielnej kompilacji
+			    na dowolnej dystrybucji Linuxa.\\\\
+			    W celu usprawnienia pracy nad projektem oraz umożliwieniem dostępu do bazy danych dla każdego członka grupy projektowej,
+			    za pośrednictwem strony {\bfseries digitalocean.com} utworzono maszynę wirtualną Linuxa z dystrybucją {\bfseries CentOS 7.5},
+			    który wspiera paczki RPM. Po utworzeniu maszyny i podaniu publicznego klucza RSA można zalogować się na nowo utworzony serwer
+			    przy pomocy SSH. Każda maszyna wirtualna otrzymuje bezpośredni, zewnętrzny adres IP.\\\\
+			    W celu instalacji produktu Oracle należy najpierw zarejestrować się na stronie korporacji. Po zalogowaniu otrzymujemy link
+			    z indywidualnym tokenem autoryzacyjnym, po skopiowaniu linku możemy pobrać spakowany paczkę przy pomocy programu 
+			    {\bfseries curl} lub {\bfseries wget} bezpośrednio na nasz serwer. Następnie trzeba ją rozpakować używając komendy {\bfseries unzip}.
+			    Przed instalacją należy upewnić się, że nasz system spełnia wymagania określone przez Oracle. Należy doinstalować wymagane
+			    paczki na których bazuje system bazodanowy Oracle - {\bfseries libaio, bc, oraz flex}. Można to wykonać automatycznie
+			    korzystając z managera paczek {\bfseries YUM}, który jest domyślnym systemem zarządzania paczkami w systemie CentOS.
+			    Składnia jest następująca: {\bfseries yum install libaio bc flex}. Oprócz tego, Oracle wymaga by w systemie znajdowała się
+			    aktywna partycja swap lub swapfile o minimalnym rozmiarze 2GB. Po wypakowaniu pliku instalujemy paczkę przy pomocy
+			    {\bfseries rpm -i <nazwa paczki>}. Po zakończeniu instalacji, przed pierwszym użyciem należy skonfigurować serwis hostujący
+			    bazę Oracle. W tym celu musimy wywołać konfigurator jako root poleceniem: {\bfseries /etc/init.d/oracle-xe configure}. Konfiguracja
+			    prosi o nadanie hasła dla użytkowników {\bfseries SYS/SYSTEM}, będących administratorami bazy Oracle, określenie portów dla serwera
+			    HTTP oraz listenera bazy danych, oraz czy chcemy by serwis załączał się automatycznie przy starcie hosta.\\\\
+			    Po wykonaniu tych operacji możemy zalogować się po IP serwera na użytkownika {\bfseries SYSTEM} w celu dalszej konfiguracji bazy danych,
+			    którą można wykonać przy pomocy zapytań SQL. W pierwszej kolejności utworzono użytkownika do którego będą należeć encje projektu.
+			    Oprócz tego stworzono użytkownika i nadano odpowiednie uprawnienia dla każdego członka zespołu projektowego. Dzięki zastosowaniu
+			    synonimów/aliasów publicznych - {\bfseries CREATE PUBLIC SYNONYM ...} encje oraz funkcje projektu są dostępne dla każdego członka
+			    zespołu bez konieczności adresowania z uwzględnieniem właściciela.\\\\ 
+			    Takie rozwiązanie umożliwia równoległą pracę nad jedną bazą danych dla wielu użytkowników fizycznych, w dowolnym miejscu i czasie.
 		    
-		    \paragraph{Implementacja obiektów}
+		    \paragraph{Implementacja obiektów}\mbox{}\\\\
 		    
-		    \paragraph{Wprowadzenie danych}
+		    \paragraph{Wprowadzenie danych}\mbox{}\\\\
 		    
-		    \paragraph{Zdefiniowanie typowych operacji SQL}
+		    \paragraph{Zdefiniowanie typowych operacji SQL}\mbox{}\\\\
 
     \subsection{Podsumowanie}
 	    \subsubsection{Ocena realizacji tematu}
