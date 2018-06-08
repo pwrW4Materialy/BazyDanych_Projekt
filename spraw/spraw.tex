@@ -6,6 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{booktabs,multirow,multicol}
 
+\usepackage{float}
 \usepackage{graphicx}
 \graphicspath{}
 
@@ -17,6 +18,11 @@
 	\includegraphics[width=#1\textwidth]{#2}
 	\captionof{figure}{#3\label{fig:#2}}
 }
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+\renewcommand{\theparagraph}{\textbullet}       % kropki czy kolejne rzymskie czy coś innego?
+%\renewcommand{\theparagraph}{\Roman{paragraph}}
 
 \begin{document}
 \begin{titlepage}
@@ -29,7 +35,7 @@
     {\itshape\Large Marcin Kotas --- 235098\/\par}
     \vfill
     Prowadzący:\par
-    ~Dr inż.~Dariusz \textsc{Jankowski}
+    Dr inż.~Dariusz \textsc{Jankowski}
 
     \vfill
 
@@ -51,10 +57,123 @@
     \subsection{Wymagania systemu}
     
     \subsection{Model danych ERD}
-		\subsubsection{Identyfikacja zbioru encji wraz z ich atrybutami kluczowymi}
-	    
-	    \subsubsection{Identyfikacja bezpośrednich zależności między encjami}
-    
+        \subsubsection{Identyfikacja zbioru encji wraz z ich atrybutami kluczowymi}
+            W systemie wyodrębnione zostały następujące encje oraz identyfikujące je atrybuty:
+            \begin{table}[h]
+                \centering
+                \caption{Encje i identyfikatory}\label{tab:entitiesID}
+                \begin{tabular}{cc}\toprule
+                    Encja   	    &	Atrybut	\\\midrule
+                    Locations	    &	Location\_ID	\\
+                    Agencies	    &	Agency\_ID	\\
+                    Users   	    &	User\_ID	\\
+                    Apartments	    &	Apartment\_ID	\\
+                    Reservations	&	Reservation\_ID	\\
+                    Payments	    &	Payment\_ID	\\
+                \bottomrule
+                \end{tabular}
+            \end{table}
+
+        \subsubsection{Identyfikacja bezpośrednich zależności między encjami}
+            Badane jest bezpośrednie powiązanie pomiędzy wszystkimi parami obiektów w systemie.
+            Biorąc pod uwagę każdą parę obiektów A i B sprawdzamy czy każde wystąpienie obiektu typu A
+            może być powiązane z pewnym wystąpieniem obiektu typu B bez udziału innego pośredniego obiektu.
+            Uwzględniamy jednak tylko powiązania istotne z punktu widzenia systemu,
+            to znaczy takie powiązania, o których informacja powinna być utrzymana w systemie,
+            ponieważ odzwierciedlają one reguły i zasady panujące w organizacji użytkownika.
+            Wykryte powiązania przedstawiliśmy w tak zwanej tablicy krzyżowej (tablica~\ref{tab:cross}),
+            w których znakiem X oznaczono istnienie bezpośredniego, istotnego powiązania.
+            \begin{table}[h]
+                \centering
+                \caption{Tabela krzyżowa, zależności bezpośrednie pomiędzy encjami}\label{tab:cross}
+                \begin{tabular}{ccccccc}\toprule
+                    &	Locations	&	Agencies	&	Users	&	Apartments	&	Reservations	&	Payments	\\\midrule
+                    Locations	    &		&	X	&	X	&	X	&		&		\\
+                    Agencies	    &	X	&		&		&	X	&		&		\\
+                    Users	        &	X	&		&		&	X	&	X	&		\\
+                    Apartments	    &	X	&	X	&	X	&		&	X	&		\\
+                    Reservations	&		&		&	X	&	X	&		&	X	\\
+                    Payments	    &		&		&		&		&	X	&		\\
+                \bottomrule
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \caption{Opis atrybutów}\label{tab:attributes}
+                \begin{tabular}{ll}\toprule
+                    \multicolumn{1}{c}{Atrybut}	&	\multicolumn{1}{c}{Opis}\\\midrule
+                    Location\_ID	&	Identyfikator lokalizacji	\\
+                    Country\_Name	&	Nazwa państwa	\\
+                    City	&	Nazwa miasta	\\
+                    Longitude	&	Długość geograficzna	\\
+                    Latitude	&	Szerokość geograficzna	\\
+                    Street	&	Adres	\\
+                    Street2	&	Adres c.d.	\\
+                    Apartment\_Number	&	Nr mieszkania	\\
+                    Zip\_Code	&	Kod pocztowy	\\
+                    Agency\_ID	&	Identyfikator agencji	\\
+                    Agencies.Name	&	Nazwa agencji	\\
+                    Agencies.Info	&	Informacje o agencji	\\
+                    Phone	&	Nr telefonu	\\
+                    Web	&	Strona internetowa	\\
+                    User\_ID	&	Identyfikator użytkownika	\\
+                    Users.Type	&	Typ użytkownika (właściciel | klient)	\\
+                    Email	&	Adres email	\\
+                    Password	&	Hasło użytkownika	\\
+                    Users.Info	&	Informacje o użytkowniku	\\
+                    Users.Name	&	Imię użytkownika	\\
+                    Last\_Name	&	Nazwisko użytkownika	\\
+                    Apartment\_ID	&	Identyfikator apartamentu	\\
+                    Cost\_Per\_Night	&	Koszt za jedną noc	\\
+                    Bed\_Count	&	Liczba łóżek w apartamencie	\\
+                    Air\_Cond	&	Klimatyzacja w apartamencie na wyposażeniu	\\
+                    Standard	&	Standard apartamentu (1 --- 5)	\\
+                    Owner\_ID	&	Identyfikator właściciela apartamentu	\\
+                    Reservation\_ID	&	Identyfikator rezerwacji	\\
+                    Date\_Begin	&	Data rozpoczęcia pobytu	\\
+                    Date\_End	&	Data zakończenia pobytu	\\
+                    Reservations.Status	&	Status rezerwacji (rozpoczęta | zaakceptowana | zakończona)	\\
+                    Payment\_ID	&	Identyfikator wpłaty	\\
+                    Payments.Type	&	Typ wpłaty (zaliczka | całość)	\\
+                    Value	&	Wartość wpłaty	\\
+                    Payments.Status	&	Status wpłaty (rozpoczęta | zakończona | anulowana | zwrócona)	\\
+                \bottomrule
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \caption{Wykaz encji i powiązanych z nimi atrybutów}\label{tab:entitiesAttributes}
+                \begin{tabular}{lp{0.8\linewidth}}\toprule
+                    \multicolumn{1}{c}{Encja}	&	\multicolumn{1}{c}{Atrybut}	\\\midrule
+                    Locations	&	Location\_ID, Country\_Name, City, Longitude, Latitude, Street, Street2, Apartment\_Number, Zip\_Code	\\
+                    Agencies	&	Agency\_ID, Location\_ID, Name, Info, Phone, Web	\\
+                    Users	&	User\_ID, Type, Email, Password, Info, Phone, Name, Last\_Name, Location\_ID	\\
+                    Apartments	&	Apartment\_ID, Cost\_Per\_Night, Bed\_Count, Location\_ID, Agency\_ID, Air\_Cond, Standard, Owner\_ID	\\
+                    Reservations	&	Reservation\_ID, Date\_Begin, Date\_End, Apartment\_ID, User\_ID, Status	\\
+                    Payments	&	Payment\_ID, Reservation\_ID, Type, Value, Status	\\
+                \bottomrule
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \caption{Opis związków pomiędzy encjami}\label{tab:relations}
+                \begin{tabular}{ll}\toprule
+                    \multicolumn{1}{c}{Związek}	&	\multicolumn{1}{c}{Opis}	\\\midrule
+                    Posiada	&	Agencies --- Locations; 1:1	\\
+                    Posiada	&	Users --- Locations; 1:1	\\
+                    Posiada	&	Apartments --- Locations; 1:1	\\
+                    Ma	&	Apartments --- Agencies; N:1	\\
+                    Ma	&	Apartments --- Users; N:1	\\
+                    Dotyczy	&	Reservations --- Apartments; N:1	\\
+                    Dotyczy	&	Reservations --- Users; N:1	\\
+                    Dotyczy	&	Payments --- Reservations; 1:1	\\
+                \bottomrule
+                \end{tabular}
+            \end{table}
+
     \subsection{Schemat diagramu ERD}
 	    \subsubsection{Opis aplikacji w której modelowano schemat}
 	    
@@ -62,13 +181,13 @@
 
     \subsection{Rozwiązanie problemu}
 	    \subsubsection{system bazodanowy}
-		    \subparagraph{Utworzenie bazy danych}
+		    \paragraph{Utworzenie bazy danych}
 		    
-		    \subparagraph{Implementacja obiektów}
+		    \paragraph{Implementacja obiektów}
 		    
-		    \subparagraph{Wprowadzenie danych}
+		    \paragraph{Wprowadzenie danych}
 		    
-		    \subparagraph{Zdefiniowanie typowych operacji SQL}
+		    \paragraph{Zdefiniowanie typowych operacji SQL}
 
     \subsection{Podsumowanie}
 	    \subsubsection{Ocena realizacji tematu}
