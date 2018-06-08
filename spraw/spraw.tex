@@ -42,6 +42,67 @@
 
 \section{Wstęp teoretyczny}
     \subsection{Podstawy relacyjnych baz danych}
+    Relacyjna baza danych jest zbiorem schematów tabel i relacji między nimi. Służą to przechowywania przeważnie dużych 
+    zbiorów danych w ściśle określony sposób.
+    Relacyjne bazy danych są jednym z trzech istniejących komercyjnie modelów, oprócz niej istnieją również bazy hierarchiczne
+    i obiektowe, jednak nie cieszą się one tak dużą popularnością. Model relacyjny został opracowany przez Edgara Frank Codda
+    w latach 70 ubiegłego wieku.
+    Model organizuje dane w jedną lub więcej tabel składającą się z kolumn i rekordów (wierszy). Każdy rekord musi posiadać
+    unikalny klucz, który go identyfikuje. Generalnie jedna tabela reprezentuje jeden typ encji (np. budynek).
+    Rekordy przedstawiają instancje encji (np. ratusz), a w kolumnach przechowywane są atrybuty i informacje (np. rozmiar, rok budowy).
+    	\subparagraph{Tabela\\}
+    	To struktura przechowująca dane ściśle określonego typu. Tabela zawiera rekordy, które posiadają swoje atrybuty.
+    	Struktury te można łączyć relacjami.
+	  	\subparagraph{Klucze\\}
+  		Każdy rekord posiada swój unikalny klucz. Pozwalają one na jednoznaczną identyfikację wiersza.
+  	 Dzięki tym kluczom można łączyć rekordy między różnymi tabelami. To umożliwia modelowanie relacji. 
+  		\begin{itemize}
+  	 	\item \textbf{KLUCZ PODSTAWOWY (PRIMARY KEY)}\\
+  	 	 To klucz identyfikujący jednoznacznie wiersz. Tabela może mieć tylko jeden taki klucz (nie może się powtarzać).
+  	 	 Klucze te dzielą się na naturalne oraz sztuczne. Naturalne takie jak np. numer PESEL lub e-mail(koniecznie musi być unikalny) 
+  	 	 jest z punktu widzenia systemu tak samo jak inne atrybuty jak np. nazwa firmy. Jeśli nie istnieje rzeczywisty identyfikator 
+  	 	 to nadawany jest klucz sztuczny, który znajduję się w dodatkowo stworzonej kolumnie z możliwie jak najkrótszym kluczem.
+  	 	 Zazwyczaj będą to kolejne liczby naturalne. 
+  	 	 \item \textbf{KLUCZ OBCY (FOREIGN KEY)}\\
+  	 	 Są to atrybuty, które wskazują na klucz podstawowy w innej tabeli, jest to po prostu relacja między dwoma tabelami.
+  	 	 W tabeli, która jest powiązana kluczem obcym należy powielić całą strukturę, aby możliwe było wiązanie rekordów z
+  	 	 dwóch różnych tabel. Z definicji pilnowane jest, aby w wartościach klucza obcego, mogły się znaleźć tylko wartości
+  	 	 rzeczywiście istniejące jako klucz główny w innej tabeli. Klucz obcy może oczywiście dotyczyć również tej samej tabeli.
+  	 	\end{itemize}
+  	 	
+  	 	\subparagraph{Relacje\\}
+  	 	Relacje opisują związki między tabelami. Dobrze zaprojektowane relacje znacznie upraszczają prawidłowe działanie bazy danych,
+  	 	poziom skomplikowania i czytelność kwerend. Poprzez nie  projektowana jest odpowiednia logika struktury bazy.
+  	 	\begin{itemize}
+  	 	\item \textbf{RELACJA 1:1}\\
+  	 	Każdy rekord w pierwszej tabeli może mieć tylko jednego odpowiednika w drugiej tabeli i vice versa. 
+  	 	Taką sytuację można rozpatrywać jako jedną dużą tabelę podzieloną na dwie mniejsze. Stosowany gdy 
+  	 	część atrybutów tabeli można oddzielić, ponieważ może zostać użyta jako część innej tabli lub dotyczy 
+  	 	tylko części atrybutów całej tabeli. Działanie takie poprawia czytelność oraz funkcjonalność bazy danych. Można 
+  	 	też wydzielić część atrybutów, które są rzadko odpytywane.
+  	 	\item \textbf{RELACJA 1:N}\\
+  	 	Jest to relacja występująca najczęściej w relacyjnym modelu bazy danych. Występuje kiedy jeden element pierwszego 
+  	 	zbioru może zostać powiązany z wieloma elementami zbioru drugiego. 
+  	 	\item \textbf{RELACJA N:N}\\
+  	 	Realizowany jest jako dwie relacje 1:N. Jeśli między tabelą pierwszą, a drugą ma zostać zaprojektowana taka relacja to potrzebna jest jeszcze 
+  	 	trzecia tabela, która będzie pełniła funkcję łącznika. 
+  	 	\end{itemize}
+  	 	\subparagraph{Operacje na tabelach\\}
+  	 	Są to operacje, które można wykonać w relacyjnych bazach danych. Pierwsze cztery bazują na matematycznej teorii mnogości.
+  	 	\begin{itemize}
+  	 	\item \texttt{UNION} - suma zbiorów, zwraca wszystkie rekordy pierwszej i drugiej tabeli bez duplikatów.
+  	 	\item \texttt{INTERSECTION} - iloczyn zbiorów, zwraca tylko rekordy będące częścią wspólną pierwszej i drugiej tabeli.
+  	 	\item \texttt{EXCEPT} - różnica zbiorów, zwraca rekordy z pierwszej tabeli bez części wspólnej pierwszej i drugiej tabeli.
+  	 	\item \texttt{CROSS JOIN} - iloczyn kartezjański, zwraca iloczyn kartezjański dwóch tabel, czyli wszystkie możliwe kombinacje połączenia
+  	 	rekordów tych tabel.
+  	 	\item \texttt{SELECT} + \texttt{WHERE} - zwraca wybrane rekordy z tabeli, które spełniają określony warunek.
+  	 	\item \textbf{PROJECTION OPERATION} - zwraca tylko wybrane atrybuty z rekordów.
+  	 	\item \texttt{JOIN} - zwraca połączone tabele, które łączy relacja.
+  	 	\item \textbf{DIVISION} - jest operacją przeciwną do ilorazu kartezjańskiego.
+  	 	\end{itemize}
+  		
+  		
+    
 
     \subsection{Normalizacja}
 
