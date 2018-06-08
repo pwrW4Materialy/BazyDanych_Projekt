@@ -27,7 +27,8 @@ BEGIN
             AND   bed_count = v_bed_count
             AND   cost_per_night <= v_cost_per_night
             AND   air_cond >= v_air_cond
-            AND   standard >= v_standard;
+            AND   standard >= v_standard
+	ORDER BY cost_per_night;
 
     RETURN my_cursor;
 END;
@@ -121,7 +122,7 @@ CREATE OR REPLACE FUNCTION get_reservations (
     my_cursor   SYS_REFCURSOR;
 BEGIN
     OPEN my_cursor FOR SELECT
-            reservation_id
+            reservation_id, status
         FROM reservations
         WHERE
             apartment_id = v_apartment_id;
@@ -130,7 +131,7 @@ BEGIN
 END;
 
 --przykladowe:
-select reservation_id
+select reservation_id, status
 from reservations
 where apartment_id = 50;
 
@@ -183,7 +184,12 @@ RETURN int
 IS refund_amount int := 0;
   payment_type varchar2(16);
 BEGIN
-  SELECT TYPE into payment_type
+  UPDATE RESERVATIONS
+  SET STATUS = 3
+  WHERE RESERVATION_ID = 1;
+  COMMIT;
+
+  SELECT 'TYPE' into payment_type
   FROM PAYMENTS
   WHERE RESERVATION_ID = reservation;
 
@@ -203,7 +209,11 @@ RETURN refund_amount;
 end;
 
 --przyk³adowe
-SELECT TYPE
+UPDATE RESERVATIONS
+SET STATUS = 3
+WHERE RESERVATION_ID = 1;
+
+SELECT 'TYPE'
 FROM PAYMENTS
 WHERE RESERVATION_ID = 1;
 
@@ -223,7 +233,7 @@ CREATE FUNCTION GET_USER_RESERVATIONS (client_id IN int)
 RETURN SYS_REFCURSOR
 IS my_cursor SYS_REFCURSOR;
 BEGIN
-    OPEN my_cursor FOR SELECT RESERVATION_ID
+    OPEN my_cursor FOR SELECT RESERVATION_ID, STATUS
     FROM RESERVATIONS
     WHERE USER_ID = client_id;
 RETURN my_cursor;
@@ -245,12 +255,12 @@ CREATE OR REPLACE FUNCTION apartment_busy (
     my_cursor   SYS_REFCURSOR;
 BEGIN
     OPEN my_cursor FOR SELECT
-        date_begin,
-        date_end
-                       FROM
-        reservations
-                       WHERE
-        apartment_id = v_apartment_id;
+        	date_begin,
+        	date_end
+        FROM reservations
+        WHERE
+        	apartment_id = v_apartment_id
+	AND STATUS != 3;
 
     RETURN my_cursor;
 END;
@@ -263,7 +273,8 @@ SELECT
 FROM
     reservations
 WHERE
-    apartment_id = 1;
+    apartment_id = 1
+AND status != 3;
     
 --9
 /*
