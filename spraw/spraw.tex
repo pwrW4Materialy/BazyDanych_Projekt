@@ -21,8 +21,7 @@
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
 \renewcommand{\thesubsubsection}{\alph{subsubsection})}
-\renewcommand{\theparagraph}{\textbullet}       % kropki czy kolejne rzymskie czy coś innego?
-%\renewcommand{\theparagraph}{\Roman{paragraph}}
+\renewcommand{\theparagraph}{\textbullet}
 
 \begin{document}
 \begin{titlepage}
@@ -55,6 +54,34 @@
     \subsection{Przedstawienie problemu}
 
     \subsection{Wymagania systemu}
+        System powinien umożliwiać wyszukiwanie apartamentów według wybranych kryteriów.
+        W ogólnym przypadku podane zostanie jedynie państwo oraz ilość łózek,
+        wtedy system powinien zwrócić wszystkie apartamenty danego rozmiaru w wybranym kraju.
+        Dodatkowymi argumentami są maksymalna cena za noc,
+        klimatyzacja na wyposażeniu oraz standard apartamentu (liczba gwiazdek).
+
+        Dostępna musi być funkcja sprawdzająca dostępność apartamentu.
+        System zwraca daty wszystkich rezerwacji związanych z wybraną kwaterą.
+        Anulowane rezerwacje nie powinny zostać uwzględnione w wyszukiwaniu.
+
+        Złożenie rezerwacji wymaga podania identyfikatora apartamentu i użytkownika oraz dat początkowej i końcowej pobytu.
+        Na podstawie tych danych system tworzy nowy wpis w tablicy rezerwacji ze statusem `złożona'.
+        Właściciel apartamentów musi mieć możliwość przejrzenia wszystkich rezerwacji związanych z jego apartamentami
+        oraz zaakceptowania oczekujących (złożonych) rezerwacji.
+        Po zaakceptowaniu rezerwacji przez właściciela system powinien zarejestrować nową wpłatę ze statusem `rozpoczęta'
+        oraz wymaganym typem (zaliczka lub całość).
+        Każda wpłata powiązana jest z identyfikatorem odpowiedniej rezerwacji.
+
+        System umożliwia zmianę statusu płatności na wykonaną lub anulowaną w zależności od potrzeby.
+
+        Możliwe musi być również anulowanie rezerwacji.
+        W takiej sytuacji system zmienia status rezerwacji na anulowaną,
+        oraz jeżeli wpłacona była cała opłata to zmienia stan wpłaty na zwróconą
+        (następuje zwrot 80\% wartości, zaliczka nie jest zwracana).
+
+        Użytkownik zarejestrowany jako właściciel musi mieć możliwość dodawania nowych apartamentów.
+        
+        Klient może wyświetlić wszystkie swoje rezerwacje.
     
     \subsection{Model danych ERD}
         \subsubsection{Identyfikacja zbioru encji wraz z ich atrybutami kluczowymi}
@@ -76,13 +103,17 @@
 
         \subsubsection{Identyfikacja bezpośrednich zależności między encjami}
             Badane jest bezpośrednie powiązanie pomiędzy wszystkimi parami obiektów w systemie.
-            Biorąc pod uwagę każdą parę obiektów A i B sprawdzamy czy każde wystąpienie obiektu typu A
-            może być powiązane z pewnym wystąpieniem obiektu typu B bez udziału innego pośredniego obiektu.
-            Uwzględniamy jednak tylko powiązania istotne z punktu widzenia systemu,
-            to znaczy takie powiązania, o których informacja powinna być utrzymana w systemie,
-            ponieważ odzwierciedlają one reguły i zasady panujące w organizacji użytkownika.
-            Wykryte powiązania przedstawiliśmy w tak zwanej tablicy krzyżowej (tablica~\ref{tab:cross}),
-            w których znakiem X oznaczono istnienie bezpośredniego, istotnego powiązania.
+            Jeżeli któreś dane obiektu A powiązane są z obiektem B, to w tabeli (macierzy) wstawiany jest X w miejscu \(table[A][B]\).
+            Uzyskane są w ten sposób relacje pomiędzy encjami.
+            Wszystkie połączenia przedstawione zostały w postaci tabeli krzyżowej (tablica~\ref{tab:cross}),
+            jest ona symetryczna względem głównej przekątnej.
+            Dokładna specyfika relacji przedstawiona została w tablicy~\ref{tab:relations}.
+
+            Tabela~\ref{tab:attributes} zawiera opisy wszystkich atrybutów używanych w encjach,
+            natomiast ich przynależność do odpowiednich encji przedstawiona jest w tabeli~\ref{tab:entitiesAttributes}.
+
+            Na podstawie uzyskanych wyników sporządzony został diagram ERD przedstawiony w rozdziale~\ref{subsec:diagram}.
+            
             \begin{table}[h]
                 \centering
                 \caption{Tabela krzyżowa, zależności bezpośrednie pomiędzy encjami}\label{tab:cross}
@@ -133,7 +164,7 @@
                     Reservation\_ID	&	Identyfikator rezerwacji	\\
                     Date\_Begin	&	Data rozpoczęcia pobytu	\\
                     Date\_End	&	Data zakończenia pobytu	\\
-                    Reservations.Status	&	Status rezerwacji (rozpoczęta | zaakceptowana | zakończona)	\\
+                    Reservations.Status	&	Status rezerwacji (rozpoczęta | zaakceptowana | anulowana)	\\
                     Payment\_ID	&	Identyfikator wpłaty	\\
                     Payments.Type	&	Typ wpłaty (zaliczka | całość)	\\
                     Value	&	Wartość wpłaty	\\
@@ -147,12 +178,12 @@
                 \caption{Wykaz encji i powiązanych z nimi atrybutów}\label{tab:entitiesAttributes}
                 \begin{tabular}{lp{0.8\linewidth}}\toprule
                     \multicolumn{1}{c}{Encja}	&	\multicolumn{1}{c}{Atrybut}	\\\midrule
-                    Locations	&	Location\_ID, Country\_Name, City, Longitude, Latitude, Street, Street2, Apartment\_Number, Zip\_Code	\\
-                    Agencies	&	Agency\_ID, Location\_ID, Name, Info, Phone, Web	\\
-                    Users	&	User\_ID, Type, Email, Password, Info, Phone, Name, Last\_Name, Location\_ID	\\
-                    Apartments	&	Apartment\_ID, Cost\_Per\_Night, Bed\_Count, Location\_ID, Agency\_ID, Air\_Cond, Standard, Owner\_ID	\\
+                    Locations	    &	Location\_ID, Country\_Name, City, Longitude, Latitude, Street, Street2, Apartment\_Number, Zip\_Code	\\
+                    Agencies	    &	Agency\_ID, Location\_ID, Name, Info, Phone, Web	\\
+                    Users	        &	User\_ID, Type, Email, Password, Info, Phone, Name, Last\_Name, Location\_ID	\\
+                    Apartments	    &	Apartment\_ID, Cost\_Per\_Night, Bed\_Count, Location\_ID, Agency\_ID, Air\_Cond, Standard, Owner\_ID	\\
                     Reservations	&	Reservation\_ID, Date\_Begin, Date\_End, Apartment\_ID, User\_ID, Status	\\
-                    Payments	&	Payment\_ID, Reservation\_ID, Type, Value, Status	\\
+                    Payments    	&	Payment\_ID, Reservation\_ID, Type, Value, Status	\\
                 \bottomrule
                 \end{tabular}
             \end{table}
@@ -165,8 +196,8 @@
                     Posiada	&	Agencies --- Locations; 1:1	\\
                     Posiada	&	Users --- Locations; 1:1	\\
                     Posiada	&	Apartments --- Locations; 1:1	\\
-                    Ma	&	Apartments --- Agencies; N:1	\\
-                    Ma	&	Apartments --- Users; N:1	\\
+                    Ma	    &	Apartments --- Agencies; N:1	\\
+                    Ma  	&	Apartments --- Users; N:1	\\
                     Dotyczy	&	Reservations --- Apartments; N:1	\\
                     Dotyczy	&	Reservations --- Users; N:1	\\
                     Dotyczy	&	Payments --- Reservations; 1:1	\\
@@ -174,7 +205,7 @@
                 \end{tabular}
             \end{table}
 
-    \subsection{Schemat diagramu ERD}
+    \subsection{Schemat diagramu ERD}\label{subsec:diagram}
 	    \subsubsection{Opis aplikacji w której modelowano schemat}
 	    
 	    \subsubsection{Prezentacja schematu ERD bazy danych}
