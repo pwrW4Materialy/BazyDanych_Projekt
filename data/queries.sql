@@ -5,10 +5,7 @@ Usercase: user-client chce wyszukac apartament wedug parametrow:
     ilosc lozek (obowiazkowe),
     klimatyzacja,
     standard
-*/
-CREATE PUBLIC SYNONYM get_apartments
-   FOR markot.get_apartments;
-   
+*/   
 CREATE OR REPLACE FUNCTION get_apartments (
     v_country_name      IN VARCHAR2,
     v_bed_count         IN INT,
@@ -33,6 +30,7 @@ BEGIN
     RETURN my_cursor;
 END;
 
+--przyklad drukujacy wynik funkcji get_apartments:
 DECLARE
   res int;
   x SYS_REFCURSOR;
@@ -45,7 +43,7 @@ BEGIN
     END LOOP;
 end;
 
---przykladowe:
+--przykladowe
 SELECT
     apartment_id
 FROM
@@ -65,9 +63,6 @@ Usercase: user-client chce zarezerwowac apartament:
     data_poczatek (obowiazkowe),
     data_koniec (obowiazkowe)
 */
-CREATE PUBLIC SYNONYM reserve_apartment
-   FOR markot.reserve_apartment;
-   
 CREATE OR REPLACE FUNCTION reserve_apartment (
     v_apartment_id   IN INT,
     v_date_begin     IN DATE,
@@ -93,7 +88,7 @@ BEGIN
     RETURN id;
 END;
 
---przykladowe:
+--przykladowe
 INSERT INTO reservations VALUES (
     (
         SELECT
@@ -108,14 +103,10 @@ INSERT INTO reservations VALUES (
     1
 );
 
-
 /*
 Usercase: user-owner chce wyswietlic rezerwacje jego apartamentu:
     apartment_id (obowiazkowe)
-*/
-CREATE PUBLIC SYNONYM get_reservations
-   FOR markot.get_reservations;
-   
+*/ 
 CREATE OR REPLACE FUNCTION get_reservations (
     v_apartment_id IN INT
 ) RETURN SYS_REFCURSOR AS
@@ -130,7 +121,7 @@ BEGIN
     RETURN my_cursor;
 END;
 
---przykladowe:
+--przykladowe
 select reservation_id, status
 from reservations
 where apartment_id = 50;
@@ -150,7 +141,7 @@ BEGIN
 RETURN id;
 end;
 
---przykladowe:
+--przykladowe
 UPDATE RESERVATIONS
 SET STATUS = 1
 WHERE RESERVATION_ID = 1;
@@ -170,7 +161,7 @@ BEGIN
 RETURN id;
 end;
 
---przykladowe:
+--przykladowe
 UPDATE PAYMENTS
 SET STATUS = 'started'
 WHERE PAYMENT_ID = 5;
@@ -244,7 +235,6 @@ SELECT *
 FROM RESERVATIONS
 WHERE USER_ID = 499;
 
---2
 /*
 Usercase: user-client chce sprawdzic dostepno?c apartamentu:
     apartament_id (obowiszkowe)
@@ -265,8 +255,7 @@ BEGIN
     RETURN my_cursor;
 END;
 
---przyklad
-
+--przykladowe
 SELECT
     date_begin,
     date_end
@@ -276,18 +265,16 @@ WHERE
     apartment_id = 1
 AND status != 3;
     
---9
 /*
 Usercase: user-owner chce dodac apartament:
-        cost_per_night (obowiszkowe)
-        bed_count (obowiszkowe)
-        location_id (obowiszkowe)
-        agency_id (obowiszkowe)
-        air_cond (obowiszkowe)
-        standard (obowiszkowe)
-        owner_id (obowiszkowe)
+        cost_per_night (obowiazkowe)
+        bed_count (obowiazkowe)
+        location_id (obowiazkowe)
+        agency_id (obowiazkowe)
+        air_cond (obowiazkowe)
+        standard (obowiazkowe)
+        owner_id (obowiazkowe)
 */
-
 CREATE OR REPLACE FUNCTION insert_apartment (
     v_cost_per_night   IN INT,
     v_bed_count        IN INT,
@@ -327,8 +314,7 @@ BEGIN
     RETURN ret;
 END;
 
---przyklad
-
+--przykladowe
 INSERT INTO apartments (
     apartment_id,
     cost_per_night,
@@ -353,9 +339,3 @@ INSERT INTO apartments (
     2,
     400
 );
-
-DECLARE
-    x   INT;
-BEGIN
-    x := insert_apartment(200000,3,250,25,1,2,451);
-END;
