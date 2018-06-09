@@ -26,10 +26,6 @@
 \usepackage[font=small,labelfont=bf]{caption}
 \captionsetup[figure]{name=Rys.}
 
-\newcommand{\results}[3][1.0]{
-	\includegraphics[width=#1\textwidth]{#2}
-	\captionof{figure}{#3\label{fig:#2}}
-}
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
 \renewcommand{\thesubsubsection}{\alph{subsubsection})}
@@ -59,7 +55,7 @@
 
 \section{Wstęp teoretyczny}
     \subsection{Podstawy relacyjnych baz danych}
-    Relacyjna baza danych jest zbiorem schematów tabel i relacji między nimi. Służą to przechowywania przeważnie dużych 
+    Relacyjna baza danych jest zbiorem schematów tabel i relacji między nimi. Służą do przechowywania przeważnie dużych 
     zbiorów danych w ściśle określony sposób.
     Relacyjne bazy danych są jednym z trzech istniejących komercyjnie modelów, oprócz niej istnieją również bazy hierarchiczne
     i obiektowe, jednak nie cieszą się one tak dużą popularnością. Model relacyjny został opracowany przez Edgara Frank Codda
@@ -76,9 +72,9 @@
   		\begin{itemize}
   	 	\item \textbf{KLUCZ PODSTAWOWY (PRIMARY KEY)}\\
   	 	 To klucz identyfikujący jednoznacznie wiersz. Tabela może mieć tylko jeden taki klucz (nie może się powtarzać).
-  	 	 Klucze te dzielą się na naturalne oraz sztuczne. Naturalne takie jak np. numer PESEL lub e-mail(koniecznie musi być unikalny) 
-  	 	 jest z punktu widzenia systemu tak samo jak inne atrybuty jak np. nazwa firmy. Jeśli nie istnieje rzeczywisty identyfikator 
-  	 	 to nadawany jest klucz sztuczny, który znajduję się w dodatkowo stworzonej kolumnie z możliwie jak najkrótszym kluczem.
+  	 	 Klucze te dzielą się na naturalne oraz sztuczne. Naturalne takie jak np.\ numer PESEL lub e-mail (koniecznie musi być unikalny) 
+  	 	 jest z punktu widzenia systemu tak samo jak inne atrybuty jak np.\ nazwa firmy. Jeśli nie istnieje rzeczywisty identyfikator 
+  	 	 to nadawany jest klucz sztuczny, który znajduje się w dodatkowo stworzonej kolumnie z możliwie jak najkrótszym kluczem.
   	 	 Zazwyczaj będą to kolejne liczby naturalne. 
   	 	 \item \textbf{KLUCZ OBCY (FOREIGN KEY)}\\
   	 	 Są to atrybuty, które wskazują na klucz podstawowy w innej tabeli, jest to po prostu relacja między dwoma tabelami.
@@ -89,14 +85,15 @@
   	 	
   	 	\subparagraph{Relacje\\}
   	 	Relacje opisują związki między tabelami. Dobrze zaprojektowane relacje znacznie upraszczają prawidłowe działanie bazy danych,
-  	 	poziom skomplikowania i czytelność kwerend. Poprzez nie  projektowana jest odpowiednia logika struktury bazy.
+  	 	poziom skomplikowania i czytelność kwerend. Za ich pomocą projektowana jest odpowiednia logika struktury bazy.
   	 	\begin{itemize}
   	 	\item \textbf{RELACJA 1:1}\\
   	 	Każdy rekord w pierwszej tabeli może mieć tylko jednego odpowiednika w drugiej tabeli i vice versa. 
-  	 	Taką sytuację można rozpatrywać jako jedną dużą tabelę podzieloną na dwie mniejsze. Stosowany gdy 
+  	 	Taką sytuację można rozpatrywać jako jedną dużą tabelę podzieloną na dwie mniejsze. Stosowana gdy 
   	 	część atrybutów tabeli można oddzielić, ponieważ może zostać użyta jako część innej tabli lub dotyczy 
   	 	tylko części atrybutów całej tabeli. Działanie takie poprawia czytelność oraz funkcjonalność bazy danych. Można 
-  	 	też wydzielić część atrybutów, które są rzadko odpytywane.
+           też wydzielić część atrybutów, które są rzadko odpytywane.
+    \newpage
   	 	\item \textbf{RELACJA 1:N}\\
   	 	Jest to relacja występująca najczęściej w relacyjnym modelu bazy danych. Występuje kiedy jeden element pierwszego 
   	 	zbioru może zostać powiązany z wieloma elementami zbioru drugiego. 
@@ -113,39 +110,78 @@
   	 	\item \texttt{CROSS JOIN} - iloczyn kartezjański, zwraca iloczyn kartezjański dwóch tabel, czyli wszystkie możliwe kombinacje połączenia
   	 	rekordów tych tabel.
   	 	\item \texttt{SELECT} + \texttt{WHERE} - zwraca wybrane rekordy z tabeli, które spełniają określony warunek.
-  	 	\item \textbf{PROJECTION OPERATION} - zwraca tylko wybrane atrybuty z rekordów.
   	 	\item \texttt{JOIN} - zwraca połączone tabele, które łączy relacja.
+  	 	\item \textbf{PROJECTION OPERATION} - zwraca tylko wybrane atrybuty z rekordów.
   	 	\item \textbf{DIVISION} - jest operacją przeciwną do ilorazu kartezjańskiego.
   	 	\end{itemize}
   		
-  		
-    
-
     \subsection{Normalizacja}
+    Normalizacja to bezstratny proces organizowania danych w tabelach mający na celu zmniejszenie ilości danych składowanych
+    w bazie oraz wyeliminowanie potencjalnych anomalii.
+    Określa się następujące postacie normalne baz:
+    \begin{enumerate}
+        \item Pierwsza postać normalna 1NF:\\
+            Dane w tablicach są w postaci atomowej (jedna zmienna na krotkę) oraz każda encja posiada klucz główny.
+        \item Druga postać normalna 2NF:\\
+            Każda tabela powinna przechowywać dane dotyczące tylko konkretnej klasy obiektów.
+        \item Trzecia postać normalna 3NF:\\
+            Czyli każdy argument nie będący kluczem jest bezpośrednio zależny tylko od klucza głównego, a nie od innej kolumny.
+    \end{enumerate}
+    
+    Występują jeszcze kolejne postacie normalne aczkolwiek są w zasadzie używane wyłącznie przy okazji rozważań teoretycznych.
+\newpage
+    Do najważniejszych zalet normalizacji można zaliczyć:
+    \begin{itemize}
+        \item eliminacja powtarzających się kolumn
+        \item zmniejszenie szansy wystąpienia anomalii w danych
+        \item optymalizacja operacji na bazie danych
+        \item czytelność struktury bazy
+        \item efektywne przechowywanie danych na dysku
+    \end{itemize}
+
+    Korzyści te uzyskuje się kosztem spowolnienia wykonywania niektórych zapytań (np.\ wymagających złączeń).
+
+    Niekiedy w celu zwiększenia szybkości wykonywania zapytań dokonuje się procesu odwrotnego --- denormalizacji.
+    Unika się w ten sposób kosztów obliczeniowych związanych z procesem łączenia tabel.
+    Można również pozostawić kolumnę zależną od argumentów niekluczowych w przypadku,
+    gdy wyliczenie wartości jest złożone obliczeniowo lub wymagany jest częsty dostęp do tych danych.
+
+    \subparagraph{Proces normalizacji realizowanego systemu\\}
+        Na początku zaprojektowana została tablica \verb|Apartments|, która przechowywała wszystkie informacje o apartamentach.
+        Wydedukowano, iż dane o lokalizacji warto umieścić w osobnej encji, ponieważ dotyczą innej klasy obiektu.
+        Odseparowano również dane o właścicielu do tabeli \verb|Users|, która przechowuje również informacje o użytkownikach będących klientami.
+        Dodatkowo stworzono encję \verb|Agencies|, która zawiera dane o agencjach.
+
+        System wymaga przechowywania historii wszystkich rezerwacji.
+        Do tego celu utworzona została tablica \verb|Reservations|.
+        W tabeli nie zostały umieszczone informacje o rezerwującym użytkowniku ani o apartamencie w celu uniknięcia duplikowania danych.
+        Zamiast tego przechowywane są jedynie klucze obce łączące odpowiednie rekordy.
+        Z encji wydzielono dane o płatności do tabeli \verb|Payments|.
+
+        Uzyskane relacje przedstawione zostały na diagramie ERD (rozdział~\ref{subsec:diagram}) oraz w tablicy~\ref{tab:relations}.
 
 \section{Część praktyczna projektu}
     \subsection{Przedstawienie problemu}
-    Zadanie projektowe ma na celu stworzenia bazy danych do szybkiej, bezpieczniej, bezproblemowej rezerwacji apartamentów oraz możliwości stworzenia
-    aplikacji obsługującą tą bazę danych. 
-    W dzisiejszych czasach ludzie bardzo często dużo pracują i są przemęczeni, notorycznie brakuje im czasu. Mając urlop chcieliby szybko
+    Zadanie projektowe ma na celu stworzenie bazy danych do szybkiej, bezpieczniej, bezproblemowej rezerwacji apartamentów oraz możliwości stworzenia
+    aplikacji korzystającej z tej bazy danych. 
+    W dzisiejszych czasach ludzie bardzo często dużo pracują i są przemęczeni, notorycznie brakuje im czasu. Planując urlop chcieliby szybko
     i łatwo znaleźć sobie miejsce na chwilę relaksu. Wielu ludzi nie potrafi samemu sobie wyszukać i zorganizować takiego wypoczynku, a poza tym
     szukanie apartamentów w różnych miejscach, stronach internetowych jest czasochłonne i nieefektywne.
 	\begin{itemize}
-     \item Użytkownik powinien być w stanie szybko wyszukać zakwaterowanie na całym świecie i przede wszystkim porównać je za pomocą interesujących go 			 parametrów takich jak cena, lokalizacja, rozmiar.
+     \item Użytkownik powinien być w stanie szybko wyszukać zakwaterowanie na całym świecie i przede wszystkim porównać je za pomocą interesujących go parametrów takich jak cena, lokalizacja, rozmiar.
      \item Dużym atutem byłaby możliwość sortowania rosnąco lub malejąco według parametrów oraz mechanizm filtracji.
      \item Kolejnym problemem jaki może napotkać użytkownik jest przebieg płatności. Klientowi zależy, aby płatność była bezpieczna, szybka i uniwersalna,
      czyli taka sama dla rezerwacji każdego apartamentu.
      \item Użytkownik powinien mieć możliwość stworzenia konta i śledzenia historii swoich rezerwacji oraz
      anulowania jej.
-    \end{itemize}    
-    Odbiorcą takiego systemu będzie zwykły człowiek, więc powinien on być jak najprostszy i najbardziej intuicyjny w obsłudze, 
-    żeby nawet osoba starsza lub w ogóle nie zaznajomiona z technologią mogła z niej z łatwością korzystać. Baza danych powinna nawiązać 
+    \end{itemize}
+    Odbiorcą takiego systemu będzie zwykły człowiek, więc system powinien być jak najprostszy i najbardziej intuicyjny w obsłudze, 
+    żeby nawet osoba starsza lub w ogóle niezaznajomiona z technologią mogła z niej z łatwością korzystać.
+    Podmiot obsługujący aplikację oraz bazę danych powinien nawiązać 
     współpracę z jak największą ilością agencji zajmujących się wynajmem apartamentów, aby zapewnić jak największy wybór zakwaterowania.  
     Aplikacja powinna być wykonana w technologii webowej. Umożliwiłoby to użytkownikowi dostęp do niej w każdym miejscu bez
-    instalowania dodatkowego oprogramowania, co mogłoby przerastać część grupy docelowej.
+    instalowania dodatkowego oprogramowania.
        
-     
-
     \subsection{Wymagania systemu}
         System powinien umożliwiać wyszukiwanie apartamentów według wybranych kryteriów.
         W ogólnym przypadku podane zostanie jedynie państwo oraz ilość łózek,
@@ -327,7 +363,7 @@
 			    który wspiera paczki RPM. Po utworzeniu maszyny i podaniu publicznego klucza RSA można zalogować się na nowo utworzony serwer
 			    przy pomocy SSH. Każda maszyna wirtualna otrzymuje bezpośredni, zewnętrzny adres IP.\\\\
 			    W celu instalacji produktu Oracle należy najpierw zarejestrować się na stronie korporacji. Po zalogowaniu otrzymujemy link
-			    z indywidualnym tokenem autoryzacyjnym, po skopiowaniu linku możemy pobrać spakowany paczkę przy pomocy programu 
+			    z indywidualnym tokenem autoryzacyjnym, po skopiowaniu linku możemy pobrać spakowaną paczkę przy pomocy programu 
 			    {\bfseries curl} lub {\bfseries wget} bezpośrednio na nasz serwer. Następnie trzeba ją rozpakować używając komendy {\bfseries unzip}.
 			    Przed instalacją należy upewnić się, że nasz system spełnia wymagania określone przez Oracle. Należy doinstalować wymagane
 			    paczki na których bazuje system bazodanowy Oracle - {\bfseries libaio, bc, oraz flex}. Można to wykonać automatycznie
@@ -395,17 +431,15 @@
 
     \subsection{Podsumowanie}
 	    \subsubsection{Ocena realizacji tematu}
-		    Temat została w pełni zrealizowany, zaimplementowano przykładowe operacje na bazie danych realizujące założenia problemu.
+		    Temat został w pełni zrealizowany, zaimplementowano przykładowe operacje na bazie danych realizujące założenia problemu.
 		    Baza danych została oparta o model relacyjny.\\\\
 		    Ze względu na brak czasu, aplikacja wykorzystująca stworzoną bazę danych nie została napisana. W zamian za to, do kwerend zostały zrobione
-		    funkcje w języku SQL.
+		    funkcje w języku PL/SQL.
 	    
 		\subsubsection{Wnioski}
 			Projekt został zrealizowany bez większych problemów. Dzięki projektowi udało się przećwiczyć instalację i konfigurację środowiska
 			bazodanowego Oracle na systemie CentOS. Członkowie grupy projektowej przyswoili teorię relacyjnych baz danych, nabyli cennego
-			doświadczenia w tworzeniu i optymalizacji baz danych, generowania zbiorów testowych oraz poznali zaawansowane funkcje języka SQL; 
+			doświadczenia w tworzeniu i optymalizacji baz danych, generowania zbiorów testowych oraz poznali zaawansowane funkcje języka SQL 
 			pozwalające na konfigurację bazy, oraz tworzenie funkcji.
-
-\section{Literatura}
 
 \end{document}
